@@ -15,7 +15,7 @@ namespace MoveVideoFiles
                 parseDirectory = @"F:\ServerFolders\Videos\TV Shows";
             }
 
-            var goodExtensions = new[] { "avi", "mkv", "mp4" };
+            var goodExtensions = new[] { ".avi", ".mkv", ".mp4" };
             var files = Directory.GetFiles(parseDirectory, "*.*", SearchOption.AllDirectories);
 
             foreach (var file in files)
@@ -30,14 +30,14 @@ namespace MoveVideoFiles
 
                         Console.WriteLine("Moving: " + info.Name);
 
-                        info.MoveTo(moveToPath);
+                        //info.MoveTo(moveToPath);
                     }
                 }
                 else
                 {
                     Console.WriteLine("Deleting: " + info.Name);
 
-                    info.Delete();
+                    //info.Delete();
                 }
             }
 
