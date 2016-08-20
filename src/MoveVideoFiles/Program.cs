@@ -8,22 +8,37 @@ namespace MoveVideoFiles
     {
         public static void Main(string[] args)
         {
-            var directory = @"C:\Users\sstal\Downloads";
+            var parseDirectory = @"C:\Users\sstal\Downloads";
 
             if (Environment.MachineName == "MYSERVER")
             {
-                directory = @"F:\ServerFolders\Videos\TV Shows";
+                parseDirectory = @"F:\ServerFolders\Videos\TV Shows";
             }
 
-            var files = Directory.GetFiles(directory, "*.*", SearchOption.AllDirectories);
-            var fileExtensions = files.Select(Path.GetExtension)
-                .Distinct()
-                .OrderBy(x => x)
-                .ToList();
+            var goodExtensions = new[] { "avi", "mkv", "mp4" };
+            var files = Directory.GetFiles(parseDirectory, "*.*", SearchOption.AllDirectories);
 
-            foreach (var fileExtension in fileExtensions)
+            foreach (var file in files)
             {
-                Console.WriteLine(fileExtension);
+                var info = new FileInfo(file);
+
+                if (goodExtensions.Contains(Path.GetExtension(file)))
+                {
+                    if (info.DirectoryName != parseDirectory)
+                    {
+                        var moveToPath = Path.Combine(parseDirectory, info.Name);
+
+                        Console.WriteLine("Moving: " + info.Name);
+
+                        info.MoveTo(moveToPath);
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Deleting: " + info.Name);
+
+                    info.Delete();
+                }
             }
 
             Console.ReadKey();
