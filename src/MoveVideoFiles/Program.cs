@@ -30,14 +30,14 @@ namespace MoveVideoFiles
 
                         Console.WriteLine("Moving: " + info.Name);
 
-                        //info.MoveTo(moveToPath);
+                        info.MoveTo(moveToPath);
                     }
                 }
                 else
                 {
                     Console.WriteLine("Deleting: " + info.Name);
 
-                    //info.Delete();
+                    info.Delete();
                 }
             }
 
