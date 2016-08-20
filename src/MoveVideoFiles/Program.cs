@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace MoveVideoFiles
 {
@@ -9,6 +8,25 @@ namespace MoveVideoFiles
     {
         public static void Main(string[] args)
         {
+            var directory = @"C:\Users\sstal\Downloads";
+
+            if (Environment.MachineName == "MYSERVER")
+            {
+                directory = @"F:\ServerFolders\Videos\TV Shows";
+            }
+
+            var files = Directory.GetFiles(directory, "*.*", SearchOption.AllDirectories);
+            var fileExtensions = files.Select(Path.GetExtension)
+                .Distinct()
+                .OrderBy(x => x)
+                .ToList();
+
+            foreach (var fileExtension in fileExtensions)
+            {
+                Console.WriteLine(fileExtension);
+            }
+
+            Console.ReadKey();
         }
     }
 }
